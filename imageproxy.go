@@ -175,6 +175,9 @@ func (p *Proxy) serveImage(w http.ResponseWriter, r *http.Request) {
 	req.Options.ScaleUp = p.ScaleUp
 
 	actualReq, _ := http.NewRequest("GET", req.String(), nil)
+
+	p.UserAgent = "newswav-fetcher"
+
 	if p.UserAgent != "" {
 		actualReq.Header.Set("User-Agent", p.UserAgent)
 	}
@@ -270,6 +273,9 @@ func (p *Proxy) serveImage(w http.ResponseWriter, r *http.Request) {
 
 	// Block potential XSS attacks especially in legacy browsers which do not support CSP
 	w.Header().Set("X-XSS-Protection", "1; mode=block")
+
+	//if custom response header is needed
+	// w.Header().Set("Newswav-Image-Proxy", "Newswav")
 
 	w.WriteHeader(resp.StatusCode)
 	if _, err := io.Copy(w, resp.Body); err != nil {

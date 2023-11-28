@@ -21,4 +21,7 @@ COPY --from=build /app/imageproxy /app/imageproxy
 CMD ["-addr", "0.0.0.0:8080"]
 ENTRYPOINT ["/app/imageproxy"]
 
+# Found userAgent flag in main.go, but not sure container capable of accepting this flag
+# CMD ["/app/imageproxy","-userAgent=newswav-fetcher"]
+
 EXPOSE 8080
